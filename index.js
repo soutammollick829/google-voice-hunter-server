@@ -32,11 +32,19 @@ async function run() {
     await client.connect();
 
     const productsCollection = client.db('voiceHunterDB').collection('prooducts');
+    const cartsCollection = client.db('voiceHunterDB').collection('carts');
 
     app.get("/products", async(req,res)=>{
         const result = await productsCollection.find().toArray();
         res.send(result);
     })
+
+    app.post("/carts", async(req,res)=>{
+      const item = req.body;
+      const result = await cartsCollection.insertOne(item);
+      res.send(result);
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
