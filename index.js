@@ -38,12 +38,18 @@ async function run() {
         const result = await productsCollection.find().toArray();
         res.send(result);
     })
+//carts collection api
+app.get("/carts", async(req,res)=>{
+  const email = req.query;
+  const result = await cartsCollection.find().toArray();
+  res.send(result);
+});
 
     app.post("/carts", async(req,res)=>{
       const item = req.body;
       const result = await cartsCollection.insertOne(item);
       res.send(result);
-    })
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
